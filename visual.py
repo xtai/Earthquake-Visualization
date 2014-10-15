@@ -1,10 +1,8 @@
-# DMS423_HW05_Xiaoyu.py
+# Earthquake Visualization
 #
 # Homework 05 for DMS 423 Fall 14
-# by Xiaoyu Tai(Sean)
-# UBID: 50133396
+# by Xiaoyu Tai
 #
-# Earthquake Visualization
 # Input Data type: Geojson
 # 
 # "M ? - Papua, Indonesia, 1978-06-17 23:38:51.5" -> Mag=6.4
