@@ -13,9 +13,9 @@ from pyglet.gl import *
 
 ## App Settings:
 window    = pyglet.window.Window(1024,576)
-json_file = "1950-65.json"
-speed     = 0.3
-duration  = 2
+json_file = "1916-65.geojson"
+speed     = 1
+duration  = 3
 
 ## App is able to use online geojson file by import urllib and uncomment following lines:
 # url       = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson"
