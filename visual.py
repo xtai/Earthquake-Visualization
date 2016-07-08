@@ -21,6 +21,10 @@ duration  = 3
 # url       = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson"
 # json_file = urllib.urlopen(url);
 
+def datetime_fromtimestamp(timestamp):
+	"""Make negative timestamp to work under Windows"""
+	return datetime.datetime(1970, 1, 1) + datetime.timedelta(seconds=timestamp)
+
 class EarthQuake:
 	def __init__(self, longitude, latitude, dep, mag, time, title):
 		self.longitude = longitude
@@ -32,7 +36,7 @@ class EarthQuake:
 		self.alpha = 0.5
 		self.loaded = 0
 	def load(self):
-		self.datetime  = datetime.datetime.fromtimestamp(int(self.time)/1000)
+		self.datetime  = datetime_fromtimestamp(int(self.time)/1000)
 		self.vlist = pyglet.graphics.vertex_list(4, ("v2f",[-1,-1,1,-1,-1,1,1,1]), ('t2f', [0,0, 1,0, 0,1, 1,1]))
 		self.x = self.longitude * 128/45
 		self.y = self.latitude * 128/45 + 64
@@ -153,9 +157,9 @@ def update_pause():
 # update on-screen earthquakes time range and "should-be time"
 def update_text():
 	if len(onscreen_quakes):
-		t1 = datetime.datetime.fromtimestamp(onscreen_quakes[0].time)
-		t2 = datetime.datetime.fromtimestamp(onscreen_quakes[-1].time)
-		t3 = datetime.datetime.fromtimestamp(last_quake_time)
+		t1 = datetime_fromtimestamp(onscreen_quakes[0].time)
+		t2 = datetime_fromtimestamp(onscreen_quakes[-1].time)
+		t3 = datetime_fromtimestamp(last_quake_time)
 		indicative_text[2].text = "On Screen: %d quakes from %s,%s to %s,%s (%d years)" % (len(onscreen_quakes), calendar.month_abbr[t1.month], t1.year, calendar.month_abbr[t2.month], t2.year, duration)
 		indicative_text[4].text = "%s,%s" % (calendar.month_abbr[t3.month], t3.year)
 
@@ -191,7 +195,7 @@ def update_quakes(t, dt):
 # update earthquake-describing text in bottom left corner
 def update_title(q):
 	global indicative_text
-	d = datetime.datetime.fromtimestamp(q.time)
+	d = datetime_fromtimestamp(q.time)
 	t = str(q.dep)
 	t += " KM - " + q.title
 	if len(q.title) > 55:
